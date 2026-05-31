@@ -1,0 +1,9 @@
+# Python caches
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
+# Large model weights (YOLO auto-downloads these)
+yolov8n.pt

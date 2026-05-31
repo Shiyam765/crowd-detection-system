@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowd Density Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js for Graph Analysis -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="glass-panel">
+            <div class="logo-area">
+                <div class="pulse-ring"></div>
+                <h1>Crowd Density Prediction & Alert System</h1>
+            </div>
+            <div class="header-controls">
+                <button class="theme-toggle-btn" id="themeToggle">☀️ Light Mode</button>
+                <a href="/admin.html" class="btn secondary admin-link" style="text-decoration: none;">Admin Settings</a>
+                <div class="status-indicator" id="globalStatus">Safe</div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="dashboard-grid">
+                <section class="video-section glass-panel">
+                    <div class="section-header">
+                        <h2>Live Feed / Analysis</h2>
+                        <div class="controls-wrapper">
+                            <div class="upload-btn-wrapper">
+                                <button class="btn primary">Upload File</button>
+                                <input type="file" id="imageUpload" accept="image/*,video/*" />
+                            </div>
+                            <button class="btn secondary" id="webcamToggle">Start Webcam</button>
+                        </div>
+                    </div>
+                    <div class="video-container" id="videoContainer">
+                        <video id="webcamVideo" autoplay playsinline style="display: none; width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0; z-index: -1;"></video>
+                        <img id="outputImage" src="" alt="YOLOv8 Analysis" style="display: none;">
+                        <div class="placeholder" id="placeholder">
+                            <p>Upload an image or video to see crowd density analysis</p>
+                        </div>
+                        <div class="loader" id="loader" style="display: none;"></div>
+                    </div>
+                </section>
+                
+                <section class="metrics-section">
+                    <div class="metric-card glass-panel count-card">
+                        <h3>Current Crowd Count</h3>
+                        <div class="metric-value" id="crowdCount">0</div>
+                        <div class="metric-trend">People detected</div>
+                    </div>
+                    
+                    <div class="metric-card glass-panel density-card">
+                        <h3>Density Level</h3>
+                        <div class="metric-value" id="densityLevel">Low</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="densityBar" style="width: 0%;"></div>
+                        </div>
+                        <div class="density-legend" id="densityLegend" style="font-size: 0.72rem; color: var(--text-subtle); margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.2rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.5rem;">
+                            <!-- Will be dynamically populated -->
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card glass-panel trend-card">
+                        <h3>Crowd Trend (10 min forecast)</h3>
+                        <div class="metric-value" id="trendValue">Stable</div>
+                        <div class="metric-trend" id="predictedSize">Predicted Size: 0 people</div>
+                    </div>
+                    
+                    <div class="metric-card glass-panel alerts-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3>Active Alerts</h3>
+                            <span id="notificationStatus" style="font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 999px; background: var(--btn-secondary-bg); color: var(--text-subtle);">Email: Ready</span>
+                        </div>
+                        <ul class="alerts-list" id="alertsList">
+                            <li class="alert-item empty">No recent alerts</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Graph Analytics Section -->
+            <section class="analytics-section glass-panel mt-2">
+                <div class="section-header">
+                    <h2>Live Graph Analysis</h2>
+                </div>
+                <div class="chart-container" style="position: relative; height:30vh; width:100%; margin-top: 1rem;">
+                    <canvas id="analyticsChart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
